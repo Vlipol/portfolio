@@ -455,7 +455,7 @@
   }
   .modal-save:hover { opacity: 0.88; }
 
-  /* SAMPLES (ВИПРАВЛЕНИЙ СИНХРОНІЗОВАНИЙ БЛОК ДЛЯ ЗНІМОК ЕКРАНА) */
+  /* SAMPLES (ФІКС СТАЛОГО РОЗМІРУ) */
   #samples { background: var(--c-surface); }
   .samples-note {
     background: var(--c-accent-light);
@@ -480,6 +480,7 @@
     overflow: hidden;
     display: flex; 
     flex-direction: column;
+    min-height: 310px; /* Задаємо фіксовану мінімальну висоту всієї картки */
     height: 100%; 
     transition: border-color 0.2s;
   }
@@ -491,7 +492,7 @@
     font-size: 0.88rem;
     color: var(--c-muted);
     line-height: 1.65;
-    height: 140px; 
+    height: 130px; /* Чітка висота сірої зони */
     overflow: hidden;
     position: relative;
     flex-shrink: 0;
@@ -508,20 +509,26 @@
     display: flex; 
     flex-direction: column; 
     justify-content: space-between;
-    gap: 1rem;
-    flex: 1; 
+    flex: 1; /* Заповнює весь залишок картки рівномірно */
+    background: var(--c-bg);
   }
   .sample-title { 
-    font-size: 0.95rem; 
+    font-size: 0.92rem; 
     font-weight: 500; 
     line-height: 1.4;
     color: var(--c-text);
+    margin-bottom: 0.5rem;
+    /* ОБМЕЖЕННЯ ДЛЯ СТАБІЛЬНОСТІ: Рівно 2 рядки під назву, довгі обрізаються трикрапкою */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    height: 2.8em; 
   }
   .sample-actions { 
     display: flex; 
     gap: 0.5rem; 
-    margin-top: auto; 
-    flex-wrap: wrap;
+    margin-top: auto; /* Завжди заземлені до нижнього краю плашки */
   }
   .sample-btn {
     font-size: 0.78rem;
@@ -687,7 +694,7 @@
   }
 </style>
 
-<!-- EmailJS SDK інсталяція -->
+<!-- EmailJS SDK -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script type="text/javascript">
   (function() {
@@ -1036,6 +1043,7 @@
       💡 Нижче — уривки реальних текстів. Для перегляду повних версій скористайтеся кнопками «Google Docs» або «PDF» під кожним прикладом.
     </div>
     <div class="samples-grid reveal">
+      <!-- Дефолтні картки (вони перезапишуться з JS, якщо підтягнеться файл) -->
       <div class="sample-card">
         <div class="sample-preview">
           <strong>Манікюр у Львові — де зробити, скільки коштує</strong><br><br>
@@ -1043,32 +1051,6 @@
         </div>
         <div class="sample-footer">
           <div class="sample-title">SEO-стаття: Манікюр у Львові</div>
-          <div class="sample-actions">
-            <a href="https://docs.google.com/document/d/YOUR_DOC_ID/preview" target="_blank" class="sample-btn">Google Docs</a>
-            <a href="#" class="sample-btn primary-btn">PDF ↓</a>
-          </div>
-        </div>
-      </div>
-      <div class="sample-card">
-        <div class="sample-preview">
-          <strong>DevOps Managed Services — Why Businesses Choose Outsourcing</strong><br><br>
-          Managing infrastructure in-house requires not only technical expertise but also a dedicated team, round-the-clock monitoring, and significant operational costs. DevOps Managed Services offer a smarter path...
-        </div>
-        <div class="sample-footer">
-          <div class="sample-title">Landing page copy (EN)</div>
-          <div class="sample-actions">
-            <a href="https://docs.google.com/document/d/YOUR_DOC_ID/preview" target="_blank" class="sample-btn">Google Docs</a>
-            <a href="#" class="sample-btn primary-btn">PDF ↓</a>
-          </div>
-        </div>
-      </div>
-      <div class="sample-card">
-        <div class="sample-preview">
-          <strong>Hochzeitsvideos in Hannover — Erinnerungen für die Ewigkeit</strong><br><br>
-          Ein Hochzeitsvideo ist mehr als nur eine Aufnahme — es ist die Geschichte eures besonderen Tages, die ihr immer wieder erleben könnt. Als professioneller Videograf in Hannover begleite ich euch...
-        </div>
-        <div class="sample-footer">
-          <div class="sample-title">SEO-стаття (DE)</div>
           <div class="sample-actions">
             <a href="https://docs.google.com/document/d/YOUR_DOC_ID/preview" target="_blank" class="sample-btn">Google Docs</a>
             <a href="#" class="sample-btn primary-btn">PDF ↓</a>
@@ -1097,7 +1079,7 @@
         <div class="step-circle">1</div>
         <div>
           <div class="step-title">Отримую задачу</div>
-          <div class="step-desc">Бриф, ТЗ або просто повідомлення — приймаю в будь-якому форматі</div>
+          <div class="step-desc">Бриф, ТЗ або просто повідомлення — приймаю в будь-какому форматі</div>
         </div>
       </div>
       <div class="process-step">
@@ -1163,7 +1145,8 @@
         </a>
       </div>
     </div>
-    <div class="contact-form reveal">
+    <!-- Форма тепер має чіткий ID -->
+    <div class="contact-form reveal" id="contactForm">
       <div class="form-group">
         <label>Ваше ім'я</label>
         <input type="text" id="clientName" placeholder="Як до вас звертатися?">
@@ -1176,7 +1159,7 @@
         <label>Задача</label>
         <textarea id="clientTask" placeholder="Коротко про проєкт: що потрібно написати, яка тема, дедлайн..."></textarea>
       </div>
-      <button class="btn btn-primary" onclick="handleFormSubmit(this)" style="width: 100%; justify-content: center; display: block; text-align: center;">Надіслати</button>
+      <button class="btn btn-primary" id="submitBtn" style="width: 100%; justify-content: center; display: block; text-align: center;">Надіслати</button>
     </div>
   </div>
 </section>
@@ -1186,6 +1169,7 @@
 </footer>
 
 <script>
+  // Завантаження динамічних даних
   async function loadPortfolioData() {
     try {
       let localData = localStorage.getItem('portfolioData');
@@ -1263,7 +1247,7 @@
         }
       }
  
-      // Samples
+      // СИНХРОНІЗАЦІЯ ДИНАМІЧНОГО ШАБЛОНУ З НАШИМ НОВИМ СТАЛИМ CSS ВЕРСТКИ ТЕКСТІВ
       if (d.samples && d.samples.length) {
         const sg2 = document.querySelector('.samples-grid');
         if (sg2) {
@@ -1309,48 +1293,51 @@
   if (addBtn) addBtn.style.display = 'none'; 
   if (closeBtn) closeBtn.addEventListener('click', () => modal && modal.classList.remove('open'));
  
-  // ІНТЕГРАЦІЯ З EMAILJS
-  function handleFormSubmit(btn) {
-    const name = document.getElementById('clientName').value.trim();
-    const contact = document.getElementById('clientContact').value.trim();
-    const task = document.getElementById('clientTask').value.trim();
+  // НАДІЙНЕ ПІДКЛЮЧЕННЯ СЛУХАЧА ПОДІЇ НА КНОПКУ ЧЕРЕЗ JS ДЛЯ ОБХОДУ ПОМИЛОК ІНІЦІАЛІЗАЦІЇ
+  const submitBtn = document.getElementById('submitBtn');
+  if (submitBtn) {
+    submitBtn.addEventListener('click', function() {
+      const name = document.getElementById('clientName').value.trim();
+      const contact = document.getElementById('clientContact').value.trim();
+      const task = document.getElementById('clientTask').value.trim();
 
-    if (!name || !contact || !task) {
-      alert('Будь ласка, заповніть усі поля форми перед відправкою.');
-      return;
-    }
+      if (!name || !contact || !task) {
+        alert('Будь ласка, заповніть усі поля форми перед відправкою.');
+        return;
+      }
 
-    btn.textContent = 'Надсилання...';
-    btn.style.pointerEvents = 'none';
+      submitBtn.textContent = 'Надсилання...';
+      submitBtn.style.pointerEvents = 'none';
 
-    const templateParams = {
-      from_name: name,
-      client_contact: contact,
-      project_desc: task
-    };
+      const templateParams = {
+        from_name: name,
+        client_contact: contact,
+        project_desc: task
+      };
 
-    emailjs.send('service_3c1r31o', 'template_1al4j2w', templateParams)
-      .then(function(response) {
-         console.log('SUCCESS!', response.status, response.text);
-         btn.textContent = '✓ Надіслано!';
-         btn.style.background = 'var(--c-accent-mid)';
-         
-         document.getElementById('clientName').value = '';
-         document.getElementById('clientContact').value = '';
-         document.getElementById('clientTask').value = '';
-      }, function(error) {
-         console.error('FAILED...', error);
-         btn.textContent = '❌ Помилка відправки';
-         btn.style.background = '#d9534f';
-         btn.style.pointerEvents = '';
-      })
-      .finally(() => {
-         setTimeout(() => {
-           btn.textContent = 'Надіслати';
-           btn.style.background = '';
-           btn.style.pointerEvents = '';
-         }, 4000);
-      });
+      emailjs.send('service_3c1r31o', 'template_1al4j2w', templateParams)
+        .then(function(response) {
+           console.log('SUCCESS!', response.status, response.text);
+           submitBtn.textContent = '✓ Надіслано!';
+           submitBtn.style.background = 'var(--c-accent-mid)';
+           
+           document.getElementById('clientName').value = '';
+           document.getElementById('clientContact').value = '';
+           document.getElementById('clientTask').value = '';
+        }, function(error) {
+           console.error('FAILED...', error);
+           submitBtn.textContent = '❌ Помилка відправки';
+           submitBtn.style.background = '#d9534f';
+           submitBtn.style.pointerEvents = '';
+        })
+        .finally(() => {
+           setTimeout(() => {
+             submitBtn.textContent = 'Надіслати';
+             submitBtn.style.background = '';
+             submitBtn.style.pointerEvents = '';
+           }, 4000);
+        });
+    });
   }
 </script>
 </body>
