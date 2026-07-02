@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Портфоліо — Контент-менеджер та копірайтер</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --c-bg: #FAFAF8;
+    --c-surface: #F2F0EB;
+    --c-text: #1A1A18;
+    --c-muted: #6B6B67;
+    --c-accent: #2A5C45;
+    --c-accent-light: #E1F5EE;
+    --c-accent-mid: #1D9E75;
+    --c-border: rgba(26,26,24,0.12);
+    --c-nav-bg: rgba(250,250,248,0.92);
+    --font-display: 'DM Serif Display', serif;
+    --font-body: 'DM Sans', sans-serif;
+    --max: 1100px;
+    --r: 10px;
+    --c-preview-fade: linear-gradient(transparent, #F2F0EB);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --c-bg: #131311;
+      --c-surface: #1E1E1B;
+      --c-text: #F0EFE8;
+      --c-muted: #9A9A94;
+      --c-accent: #1D9E75;
+      --c-accent-light: #04342C;
+      --c-accent-mid: #5DCAA5;
+      --c-border: rgba(240,239,232,0.10);
+      --c-nav-bg: rgba(19,19,17,0.92);
+      --c-preview-fade: linear-gradient(transparent, #1E1E1B);
+    }
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--c-bg);
+    color: var(--c-text);
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: var(--c-nav-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--c-border);
+  }
+  .nav-inner {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 0 2rem;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+  .nav-logo {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    color: var(--c-text);
+    white-space: nowrap;
+  }
+  .nav-logo span {
+    color: var(--c-accent-mid);
+  }
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    list-style: none;
+  }
+  .nav-links a {
+    display: block;
+    padding: 0.5rem 0.85rem;
+    font-size: 0.88rem;
+    font-weight: 400;
+    color: var(--c-muted);
+    border-radius: 6px;
+    transition: color 0.2s, background 0.2s;
+  }
+  .nav-links a:hover { color: var(--c-text); background: var(--c-surface); }
+  .nav-cta {
+    background: var(--c-accent) !important;
+    color: #fff !important;
+    font-weight: 500 !important;
+    padding: 0.5rem 1.1rem !important;
+    border-radius: 6px !important;
+    transition: opacity 0.2s !important;
+  }
+  .nav-cta:hover { opacity: 0.88; background: var(--c-accent) !important; }
+
+  .hamburger { display: none; cursor: pointer; background: none; border: none; padding: 8px; }
+  .hamburger span {
+    display: block; width: 22px; height: 1.5px;
+    background: var(--c-text); margin: 5px 0;
+    transition: transform 0.3s, opacity 0.3s;
+  }
+
+  /* SECTIONS */
+  section { padding: 5rem 2rem; }
+  .container { max-width: var(--max); margin: 0 auto; }
+
+  .label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--c-accent-mid);
+    margin-bottom: 1.25rem;
+  }
+
+  /* HERO */
+  #hero {
+    padding-top: 9rem;
+    padding-bottom: 5rem;
+    min-height: 92vh;
+    display: flex;
+    align-items: center;
+  }
+  .hero-inner {
+    max-width: var(--max);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 4rem;
+    align-items: center;
+  }
+  .hero-h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 4.5vw, 3.4rem);
+    line-height: 1.15;
+    color: var(--c-text);
+    margin-bottom: 1.25rem;
+  }
+  .hero-h1 em { font-style: italic; color: var(--c-accent-mid); }
+  .hero-sub {
+    font-size: 1.05rem;
+    color: var(--c-muted);
+    max-width: 540px;
+    margin-bottom: 2.5rem;
+    line-height: 1.65;
+  }
+  .btn-row { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+  .btn {
+    display: inline-block;
+    padding: 0.7rem 1.4rem;
+    border-radius: var(--r);
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 1.5px solid transparent;
+  }
+  .btn-primary {
+    background: var(--c-accent);
+    color: #fff;
+  }
+  .btn-primary:hover { opacity: 0.88; }
+  .btn-outline {
+    border-color: var(--c-border);
+    color: var(--c-text);
+    background: transparent;
+  }
+  .btn-outline:hover { background: var(--c-surface); border-color: var(--c-accent-mid); }
+
+  .hero-card {
+    background: var(--c-surface);
+    border: 1px solid var(--c-border);
+    border-radius: 16px;
+    padding: 2rem;
+  }
+  .hero-card-title {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--c-muted);
+    margin-bottom: 1.25rem;
+  }
+  .hero-stats { display: flex; flex-direction: column; gap: 1.1rem; }
+  .stat-item { display: flex; align-items: flex-start; gap: 0.85rem; }
+  .stat-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--c-accent-mid);
+    flex-shrink: 0; margin-top: 0.55rem;
+  }
+  .stat-num {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    line-height: 1.1;
+    color: var(--c-text);
+  }
+  .stat-desc { font-size: 0.82rem; color: var(--c-muted); margin-top: 0.1rem; }
+  .hero-divider {
+    border: none;
+    border-top: 1px solid var(--c-border);
+    margin: 1.25rem 0;
+  }
+  .hero-langs { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .lang-pill {
+    font-size: 0.78rem;
+    padding: 0.3rem 0.75rem;
+    border-radius: 20px;
+    background: var(--c-accent-light);
+    color: var(--c-accent-mid);
+    font-weight: 500;
+  }
+
+  /* ABOUT */
+  #about { background: var(--c-surface); }
+  .about-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+  .about-h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    line-height: 1.2;
+    margin-bottom: 1.25rem;
+  }
+  .about-h2 em { font-style: italic; color: var(--c-accent-mid); }
+  .about-text {
+    color: var(--c-muted);
+    font-size: 0.97rem;
+    line-height: 1.75;
+  }
+  .about-text p + p { margin-top: 1rem; }
+  .about-facts { display: flex; flex-direction: column; gap: 1rem; }
+  .fact-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    background: var(--c-bg);
+    border: 1px solid var(--c-border);
+    border-radius: var(--r);
+  }
+  .fact-icon {
+    width: 38px; height: 38px;
+    border-radius: 8px;
+    background: var(--c-accent-light);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 1.1rem;
+  }
+  .fact-label { font-size: 0.78rem; color: var(--c-muted); margin-bottom: 0.2rem; }
+  .fact-value { font-size: 0.92rem; font-weight: 500; color: var(--c-text); }
+
+  /* SKILLS */
+  .skills-header { max-width: 520px; margin-bottom: 3rem; }
+  .section-h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    line-height: 1.2;
+    margin-bottom: 0.75rem;
+  }
+  .section-sub { color: var(--c-muted); font-size: 0.97rem; }
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 1rem;
+  }
+  .skill-card {
+    padding: 1.25rem;
+    border: 1px solid var(--c-border);
+    border-radius: var(--r);
+    background: var(--c-bg);
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .skill-card:hover { border-color: var(--c-accent-mid); transform: translateY(-2px); }
+  .skill-top {
+    display: flex; align-items: center; gap: 0.75rem;
+    margin-bottom: 0.5rem;
+  }
+  .skill-ico {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    background: var(--c-accent-light);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+  .skill-name { font-size: 0.93rem; font-weight: 500; }
+  .skill-desc { font-size: 0.82rem; color: var(--c-muted); line-height: 1.55; }
+
+  /* SERVICES */
+  #services { background: var(--c-surface); }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+  .service-block {
+    padding: 1.75rem;
+    background: var(--c-bg);
+    border: 1px solid var(--c-border);
+    border-radius: 14px;
+    display: flex;
+    flex-direction: column;
+  }
+  .service-num {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    color: var(--c-accent-light);
+    line-height: 1;
+    margin-bottom: 0.75rem;
+    -webkit-text-stroke: 1.5px var(--c-accent-mid);
+    color: transparent;
+  }
+  .service-title {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--c-border);
+  }
+  .service-list { list-style: none; margin-top: auto; }
+  .service-list li {
+    font-size: 0.88rem;
+    color: var(--c-muted);
+    padding: 0.35rem 0;
+    display: flex; align-items: flex-start; gap: 0.5rem;
+  }
+  .service-list li::before {
+    content: '—';
+    color: var(--c-accent-mid);
+    flex-shrink: 0;
+    font-size: 0.8rem;
+    margin-top: 0.1rem;
+  }
+
+  /* CASES */
+  .cases-header {
+    display: flex; align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap; gap: 1rem;
+  }
+  .cases-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+    gap: 1.25rem;
+  }
+  .case-card {
+    padding: 1.5rem;
+    border: 1px solid var(--c-border);
+    border-radius: 14px;
+    background: var(--c-bg);
+    transition: border-color 0.2s;
+    display: flex; flex-direction: column; gap: 0.75rem;
+  }
+  .case-card:hover { border-color: var(--c-accent-mid); }
+  .case-tag {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--c-accent-mid);
+    background: var(--c-accent-light);
+    padding: 0.25rem 0.65rem;
+    border-radius: 20px;
+    align-self: flex-start;
+  }
+  .case-title { font-size: 1rem; font-weight: 500; line-height: 1.35; }
+  .case-desc { font-size: 0.86rem; color: var(--c-muted); line-height: 1.6; flex: 1; }
+  .case-meta { font-size: 0.8rem; color: var(--c-muted); border-top: 1px solid var(--c-border); padding-top: 0.75rem; margin-top: auto; }
+
+  /* Add case button */
+  .case-add {
+    border: 1.5px dashed var(--c-border);
+    border-radius: 14px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 0.5rem; padding: 2rem;
+    cursor: pointer; background: transparent;
+    color: var(--c-muted); font-family: var(--font-body);
+    font-size: 0.88rem;
+    transition: border-color 0.2s, color 0.2s;
+    min-height: 180px;
+  }
+  .case-add:hover { border-color: var(--c-accent-mid); color: var(--c-accent-mid); }
+  .case-add-icon { font-size: 2rem; line-height: 1; }
+
+  /* Modal */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0; z-index: 200;
+    background: rgba(0,0,0,0.45);
+    align-items: center; justify-content: center;
+    padding: 1rem;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--c-bg);
+    border: 1px solid var(--c-border);
+    border-radius: 16px;
+    padding: 2rem;
+    width: 100%; max-width: 480px;
+    display: flex; flex-direction: column; gap: 1rem;
+  }
+  .modal h3 { font-family: var(--font-display); font-size: 1.3rem; }
+  .modal label { font-size: 0.85rem; color: var(--c-muted); display: block; margin-bottom: 0.3rem; }
+  .modal input, .modal textarea, .modal select {
+    width: 100%;
+    padding: 0.6rem 0.85rem;
+    border: 1px solid var(--c-border);
+    border-radius: 8px;
+    background: var(--c-surface);
+    color: var(--c-text);
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    resize: vertical;
+  }
+  .modal input:focus, .modal textarea:focus, .modal select:focus {
+    outline: none; border-color: var(--c-accent-mid);
+  }
+  .modal textarea { min-height: 80px; }
+  .modal-btns { display: flex; gap: 0.75rem; justify-content: flex-end; margin-top: 0.5rem; }
+  .modal-close {
+    background: none; border: 1px solid var(--c-border);
+    color: var(--c-muted); padding: 0.55rem 1.1rem;
+    border-radius: 8px; cursor: pointer; font-family: var(--font-body);
+    font-size: 0.88rem; transition: background 0.2s;
+  }
+  .modal-close:hover { background: var(--c-surface); }
+  .modal-save {
+    background: var(--c-accent); color: #fff;
+    border: none; padding: 0.55rem 1.25rem;
+    border-radius: 8px; cursor: pointer; font-family: var(--font-body);
+    font-size: 0.88rem; font-weight: 500; transition: opacity 0.2s;
+  }
+  .modal-save:hover { opacity: 0.88; }
+
+  /* SAMPLES */
+  #samples { background: var(--c-surface); }
+  .samples-note {
+    background: var(--c-accent-light);
+    border-left: 3px solid var(--c-accent-mid);
+    padding: 0.85rem 1.1rem;
+    border-radius: 0 var(--r) var(--r) 0;
+    font-size: 0.88rem;
+    color: var(--c-muted);
+    margin-bottom: 2rem;
+    max-width: 680px;
+  }
+  .samples-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  .sample-card {
+    background: var(--c-bg);
+    border: 1px solid var(--c-border);
+    border-radius: 14px;
+    overflow: hidden;
+    display: flex; 
+    flex-direction: column;
+    height: 100%; 
+    transition: border-color 0.2s;
+  }
+  .sample-card:hover { border-color: var(--c-accent-mid); }
+  
+  .sample-preview {
+    padding: 1.5rem;
+    background: var(--c-surface);
+    font-size: 0.88rem;
+    color: var(--c-muted);
+    line-height: 1.65;
+    height: 140px; 
+    overflow: hidden;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .sample-preview::after {
+    content: ''; 
+    position: absolute;
+    bottom: 0; left: 0; right: 0; height: 50px;
+    background: var(--c-preview-fade); 
+  }
+  
+  .sample-footer {
+    padding: 1.25rem 1.5rem;
+    display: flex; 
+    flex-direction: column; 
+    justify-content: space-between;
+    gap: 1rem;
+    flex: 1; 
+  }
+  .sample-title { 
+    font-size: 0.95rem; 
+    font-weight: 500; 
+    line-height: 1.4;
+    color: var(--c-text);
+  }
+  .sample-actions { 
+    display: flex; 
+    gap: 0.5rem; 
+    margin-top: auto; 
+    flex-wrap: wrap;
+  }
+  .sample-btn {
+    font-size: 0.78rem;
+    padding: 0.45rem 0.85rem;
+    border-radius: 6px;
+    border: 1px solid var(--c-border);
+    background: var(--c-bg);
+    color: var(--c-text);
+    cursor: pointer;
+    font-family: var(--font-body);
+    transition: all 0.2s;
+    text-decoration: none; 
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .sample-btn:hover { border-color: var(--c-accent-mid); background: var(--c-accent-light); color: var(--c-accent-mid); }
+  .sample-btn.primary-btn {
+    background: var(--c-accent);
+    color: #fff; border-color: var(--c-accent);
+  }
+  .sample-btn.primary-btn:hover { opacity: 0.88; background: var(--c-accent); color: #fff; }
+
+  /* PROCESS */
+  .process-track {
+    margin-top: 3rem;
+    display: flex;
+    gap: 0;
+    position: relative;
+  }
+  .process-track::before {
+    content: '';
+    position: absolute;
+    top: 28px; left: 28px; right: 28px; height: 1px;
+    background: var(--c-border);
+    z-index: 0;
+  }
+  .process-step {
+    flex: 1;
+    display: flex; flex-direction: column;
+    align-items: center; text-align: center;
+    padding: 0 0.5rem;
+    position: relative; z-index: 1;
+  }
+  .step-circle {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: var(--c-bg);
+    border: 1.5px solid var(--c-border);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    color: var(--c-accent-mid);
+    margin-bottom: 1rem;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .process-step:hover .step-circle {
+    border-color: var(--c-accent-mid);
+    background: var(--c-accent-light);
+  }
+  .step-title { font-size: 0.88rem; font-weight: 500; margin-bottom: 0.3rem; }
+  .step-desc { font-size: 0.78rem; color: var(--c-muted); line-height: 1.5; }
+
+  /* CONTACT */
+  #contact { background: var(--c-surface); }
+  .contact-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+  .contact-h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+  .contact-h2 em { font-style: italic; color: var(--c-accent-mid); }
+  .contact-sub { color: var(--c-muted); font-size: 0.97rem; margin-bottom: 2rem; }
+  .contact-links { display: flex; flex-direction: column; gap: 0.85rem; }
+  .contact-link {
+    display: flex; align-items: center; gap: 1rem;
+    padding: 1rem 1.25rem;
+    background: var(--c-bg);
+    border: 1px solid var(--c-border);
+    border-radius: var(--r);
+    transition: border-color 0.2s;
+    font-size: 0.93rem;
+    color: var(--c-text);
+  }
+  .contact-link:hover { border-color: var(--c-accent-mid); }
+  .contact-ico {
+    width: 40px; height: 40px;
+    border-radius: 8px;
+    background: var(--c-accent-light);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; flex-shrink: 0;
+  }
+  .contact-info-label { font-size: 0.78rem; color: var(--c-muted); }
+  .contact-info-val { font-weight: 500; }
+  
+  .contact-form {
+    display: flex; flex-direction: column; gap: 1rem;
+  }
+  .form-group label {
+    display: block; font-size: 0.83rem;
+    color: var(--c-muted); margin-bottom: 0.4rem;
+  }
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    padding: 0.65rem 1rem;
+    border: 1px solid var(--c-border);
+    border-radius: var(--r);
+    background: var(--c-bg);
+    color: var(--c-text);
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    resize: vertical;
+    transition: border-color 0.2s;
+  }
+  .form-group input:focus,
+  .form-group textarea:focus {
+    outline: none; border-color: var(--c-accent-mid);
+  }
+  .form-group textarea { min-height: 110px; }
+
+  /* FOOTER */
+  footer {
+    padding: 1.5rem 2rem;
+    border-top: 1px solid var(--c-border);
+    text-align: center;
+    font-size: 0.82rem;
+    color: var(--c-muted);
+  }
+
+  /* SCROLL ANIMATIONS */
+  .reveal {
+    opacity: 0; transform: translateY(22px);
+    transition: opacity 0.55s ease, transform 0.55s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .hero-inner { grid-template-columns: 1fr; }
+    .hero-card { display: none; }
+    .about-inner, .contact-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+    .services-grid { grid-template-columns: 1fr 1fr; }
+    .process-track { flex-direction: column; gap: 1rem; }
+    .process-track::before { display: none; }
+    .process-step { flex-direction: row; text-align: left; gap: 1rem; padding: 0; }
+    .step-circle { margin-bottom: 0; flex-shrink: 0; }
+  }
+  @media (max-width: 600px) {
+    section { padding: 3.5rem 1.25rem; }
+    .nav-inner { padding: 0 1.25rem; }
+    .nav-links { display: none; flex-direction: column; position: absolute; top: 64px; left: 0; right: 0; background: var(--c-nav-bg); border-bottom: 1px solid var(--c-border); padding: 1rem; gap: 0.25rem; }
+    .nav-links.open { display: flex; }
+    .hamburger { display: block; }
+    .services-grid { grid-template-columns: 1fr; }
+    .sample-footer { padding: 1rem 1.25rem; }
+  }
+</style>
+
+<!-- EmailJS SDK підключення та ініціалізація -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script type="text/javascript">
+  (function() {
+    emailjs.init("faHci6CsT08N6XbAv");
+  })();
+</script>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#hero" class="nav-logo">Vitalii<span>.</span>Portfolio</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about">Про мене</a></li>
+      <li><a href="#skills">Навички</a></li>
+      <li><a href="#services">Послуги</a></li>
+      <li><a href="#cases">Кейси</a></li>
+      <li><a href="#samples">Приклади</a></li>
+      <li><a href="#process">Процес</a></li>
+      <li><a href="#contact" class="nav-cta">Написати</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Меню">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-inner container">
+    <div>
+      <div class="label">Контент-менеджер · Копірайтер · Сценарист</div>
+      <h1 class="hero-h1">
+        Створюю тексти та наповнюю сайти<br>
+        <em>під результат</em>
+      </h1>
+      <p class="hero-sub">Статті, тексти, SEO-контент, WordPress та багато іншого</p>
+      <div class="btn-row">
+        <a href="#about" class="btn btn-primary">Про мене</a>
+        <a href="#cases" class="btn btn-outline">Переглянути кейси</a>
+        <a href="#contact" class="btn btn-outline">Написати мені</a>
+      </div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-card-title">Коротко про досвід</div>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-dot"></div>
+          <div>
+            <div class="stat-num">1+</div>
+            <div class="stat-desc">рік у копірайтингу та контент-менеджменті</div>
+          </div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-dot"></div>
+          <div>
+            <div class="stat-num">EN / UA</div>
+            <div class="stat-desc">двомовний контент</div>
+          </div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-dot"></div>
+          <div>
+            <div class="stat-num">SEO, копірайтинг, контент-менеджмент</div>
+            <div class="stat-desc">статті, категорійні сторінки, метатеги</div>
+          </div>
+        </div>
+      </div>
+      <hr class="hero-divider">
+      <div class="hero-langs">
+        <span class="lang-pill">SEO</span>
+        <span class="lang-pill">Copywriting</span>
+        <span class="lang-pill">Scripts</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container about-inner reveal">
+    <div>
+      <div class="label">Про мене</div>
+      <h2 class="about-h2">Пишу те, що<br><em>читають і знаходять</em></h2>
+      <div class="about-text">
+        <p>Я — копірайтер і контент-менеджер, який спеціалізується на SEO-текстах, статтях для блогів та сценаріях для відео. Маю практичний досвід роботи з українськими та англомовними проєктами у сферах освіти, технологій та e-commerce.</p>
+        <p>Працюю на фрілансі, де займаюся написанням оптимізованих текстів, наповненням сайтів на WordPress і роботою з контент-брифами. Розумію, як влаштована структура сторінки — не лише з боку тексту, а й з точки зору пошукового просування.</p>
+        <p>Спеціалізуюсь на інформаційному та комерційному контенті: категорійні сторінки, лендінги, блог-статті, товарні описи, сценарії. Завжди орієнтуюсь на конкретний результат — трафік, конверсії або охоплення.</p>
+      </div>
+    </div>
+    <div class="about-facts">
+      <div class="fact-row">
+        <div class="fact-icon">🎓</div>
+        <div>
+          <div class="fact-label">Освіта</div>
+          <div class="fact-value">Прикарпатський національний університет імені Василя Стефаника</div>
+        </div>
+      </div>
+      <div class="fact-row">
+        <div class="fact-icon">💼</div>
+        <div>
+          <div class="fact-label">Досвід</div>
+          <div class="fact-value">Фріланс проєкти</div>
+        </div>
+      </div>
+      <div class="fact-row">
+        <div class="fact-icon">🌐</div>
+        <div>
+          <div class="fact-label">Мови контенту</div>
+          <div class="fact-value">Українська, Англійська</div>
+        </div>
+      </div>
+      <div class="fact-row">
+        <div class="fact-icon">⚡</div>
+        <div>
+          <div class="fact-label">Інструменти</div>
+          <div class="fact-value">Google Docs, Notion, SEO-аналітика, AI-сервіси, WordPress</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <div class="skills-header reveal">
+      <div class="label">Навички</div>
+      <h2 class="section-h2">Що я вмію</h2>
+      <p class="section-sub">Набір компетенцій, які я застосовую в реальних проєктах</p>
+    </div>
+    <div class="skills-grid reveal">
+      <div class="skill-card">
+        <div class="skill-top">
+          <div class="skill-ico">✍️</div>
+          <div class="skill-name">Copywriting (EN/UA)</div>
+        </div>
+        <div class="skill-desc">Комерційні тексти, лендінги, описи послуг двома мовами</div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-top">
+          <div class="skill-ico">🔧</div>
+          <div class="skill-name">Content Management</div>
+        </div>
+        <div class="skill-desc">Створення статей та наповення у WordPress</div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-top">
+          <div class="skill-ico">🔍</div>
+          <div class="skill-name">SEO Content Writing</div>
+        </div>
+        <div class="skill-desc">Статті та сторінки з ключовими словами, метатегами та правильною структурою</div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-top">
+          <div class="skill-ico">🛍️</div>
+          <div class="skill-name">Product Descriptions</div>
+        </div>
+        <div class="skill-desc">Товарні описи для інтернет-магазинів, маркетплейсів та каталогів</div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-top">
+          <div class="skill-ico">📰</div>
+          <div class="skill-name">Blog Articles</div>
+        </div>
+        <div class="skill-desc">Структуровані інформаційні та розважальні статті для блогів</div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-top">
+          <div class="skill-ico">🎬</div>
+          <div class="skill-name">Сценарії (скрипти)</div>
+        </div>
+        <div class="skill-desc">Тексти для відеороликів, reels, YouTube</div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-top">
+          <div class="skill-ico">💬</div>
+          <div class="skill-name">Forum / Outreach Posting</div>
+        </div>
+        <div class="skill-desc">Публікації на форумах, розміщення матеріалів та базове просування контенту</div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-top">
+          <div class="skill-ico">📊</div>
+          <div class="skill-name">Analytics & Structuring</div>
+        </div>
+        <div class="skill-desc">Робота з контент-брифами, базова аналітика</div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-top">
+          <div class="skill-ico">🤖</div>
+          <div class="skill-name">AI-assisted Content</div>
+        </div>
+        <div class="skill-desc">Робота з ChatGPT та іншими AI-інструментами для прискорення роботи</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="container">
+    <div class="reveal">
+      <div class="label">Послуги</div>
+      <h2 class="section-h2">Чим можу допомогти</h2>
+    </div>
+    <div class="services-grid reveal">
+      <div class="service-block">
+        <div class="service-num">01</div>
+        <div class="service-title">Написання текстів</div>
+        <ul class="service-list">
+          <li>Статті для блогів</li>
+          <li>SEO-статті під ключові слова</li>
+          <li>Сценарії для відео та reels</li>
+          <li>Тексти для лендінгів</li>
+        </ul>
+      </div>
+      <div class="service-block">
+        <div class="service-num">02</div>
+        <div class="service-title">Контент-менеджмент</div>
+        <ul class="service-list">
+          <li>Наповнення сайтів WordPress</li>
+          <li>Оформлення та структурування сторінок</li>
+          <li>Робота з товарними картками</li>
+          <li>Оновлення та актуалізація контенту</li>
+        </ul>
+      </div>
+      <div class="service-block">
+        <div class="service-num">03</div>
+        <div class="service-title">Контент-активність</div>
+        <ul class="service-list">
+          <li>Публікації на форумах</li>
+          <li>Розміщення зовнішніх матеріалів</li>
+          <li>Базове просування контенту</li>
+          <li>Гостьові пости та аутріч</li>
+        </ul>
+      </div>
+      <div class="service-block">
+        <div class="service-num">04</div>
+        <div class="service-title">SEO-контент</div>
+        <ul class="service-list">
+          <li>Категорійні сторінки</li>
+          <li>Написання метатегів</li>
+          <li>Кластеризація ключових слів</li>
+          <li>FAQ-блоки та структуровані дані</li>
+        </ul>
+      </div>
+      <div class="service-block">
+        <div class="service-num">05</div>
+        <div class="service-title">E-commerce контент</div>
+        <ul class="service-list">
+          <li>Товарні описи для магазинів</li>
+          <li>Тексти для Etsy / Amazon KDP</li>
+          <li>Назви, теги та ключові слова</li>
+          <li>Описи категорій каталогу</li>
+        </ul>
+      </div>
+      <div class="service-block">
+        <div class="service-num">06</div>
+        <div class="service-title">Інше</div>
+        <ul class="service-list">
+          <li>Монтаж відео</li>
+          <li>Робота з АІ (генерація)</li>
+          <li>Переклад UA ↔ EN з дотриманням орфографії</li>
+          <li>Стилістична редактура творів та текстів</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CASES -->
+<section id="cases">
+  <div class="container">
+    <div class="cases-header reveal">
+      <div>
+        <div class="label">Кейси</div>
+        <h2 class="section-h2">Виконані проєкти</h2>
+      </div>
+    </div>
+    <div class="cases-grid reveal" id="casesGrid">
+      <div class="case-card" data-case>
+        <span class="case-tag">SEO</span>
+        <div class="case-title">Тексти для Igaming компаній</div>
+        <div class="case-desc">Написав серію SEO-оптимізованих текстів для компаній в сфері igaming. Структуровані, із заголовками (H1, H2), FAQ, ключові слова</div>
+        <div class="case-meta">Нішa: Igaming · Мова: UA + EN</div>
+      </div>
+      <div class="case-card" data-case>
+        <span class="case-tag">SEO</span>
+        <div class="case-title">Off-page SEO & Outreach tasks</div>
+        <div class="case-desc">Створював та публікував пости на форумах та контент-платформах. Анкори, лінки, заголовки, ключові слова та мета-теги.</div>
+        <div class="case-meta">Нішa: Івент-послуги · Мова: DE </div>
+      </div>
+      <button class="case-add" id="addCaseBtn">
+        <span class="case-add-icon">+</span>
+        <span>Додати кейс</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ADD CASE MODAL -->
+<div class="modal-overlay" id="caseModal">
+  <div class="modal">
+    <h3>Новий кейс</h3>
+    <div>
+      <label>Тег / категорія</label>
+      <select id="caseTag">
+        <option>SEO</option>
+        <option>Лендінг</option>
+        <option>Стаття</option>
+        <option>Сценарій</option>
+        <option>E-commerce</option>
+        <option>WordPress</option>
+        <option>Інше</option>
+      </select>
+    </div>
+    <div>
+      <label>Назва проєкту</label>
+      <input type="text" id="caseTitle" placeholder="Наприклад: SEO-статті для блогу...">
+    </div>
+    <div>
+      <label>Опис (1–3 речення)</label>
+      <textarea id="caseDesc" placeholder="Що зробив, яка задача, який результат..."></textarea>
+    </div>
+    <div>
+      <label>Ніша + мова</label>
+      <input type="text" id="caseMeta" placeholder="Наприклад: IT-послуги · Мова: EN">
+    </div>
+    <div class="modal-btns">
+      <button class="modal-close" id="closeModal">Скасувати</button>
+      <button class="modal-save" id="saveCase">Зберегти</button>
+    </div>
+  </div>
+</div>
+
+<!-- SAMPLES -->
+<section id="samples">
+  <div class="container">
+    <div class="reveal">
+      <div class="label">Приклади робіт</div>
+      <h2 class="section-h2">Фрагменти текстів</h2>
+    </div>
+    <div class="samples-note reveal">
+      💡 Нижче — уривки реальних текстів. Для перегляду повних версій скористайтеся кнопками «Google Docs» або «PDF» під кожним прикладом.
+    </div>
+    <div class="samples-grid reveal">
+      <div class="sample-card">
+        <div class="sample-preview">
+          <strong>Манікюр у Львові — де зробити, скільки коштує</strong><br><br>
+          Манікюр — це не просто догляд за нігтями. Це ритуал, який допомагає відновити сили, подбати про себе і вийти з кабінету з відчуттям впевненості. Саме тому так важливо обирати майстра та студію, яким можна довіряти...
+        </div>
+        <div class="sample-footer">
+          <div class="sample-title">SEO-стаття: Манікюр у Львові</div>
+          <div class="sample-actions">
+            <a href="https://docs.google.com/document/d/YOUR_DOC_ID/preview" target="_blank" class="sample-btn">Google Docs</a>
+            <a href="#" class="sample-btn primary-btn">PDF ↓</a>
+          </div>
+        </div>
+      </div>
+      <div class="sample-card">
+        <div class="sample-preview">
+          <strong>DevOps Managed Services — Why Businesses Choose Outsourcing</strong><br><br>
+          Managing infrastructure in-house requires not only technical expertise but also a dedicated team, round-the-clock monitoring, and significant operational costs. DevOps Managed Services offer a smarter path...
+        </div>
+        <div class="sample-footer">
+          <div class="sample-title">Landing page copy (EN)</div>
+          <div class="sample-actions">
+            <a href="https://docs.google.com/document/d/YOUR_DOC_ID/preview" target="_blank" class="sample-btn">Google Docs</a>
+            <a href="#" class="sample-btn primary-btn">PDF ↓</a>
+          </div>
+        </div>
+      </div>
+      <div class="sample-card">
+        <div class="sample-preview">
+          <strong>Hochzeitsvideos in Hannover — Erinnerungen für die Ewigkeit</strong><br><br>
+          Ein Hochzeitsvideo ist mehr als nur eine Aufnahme — es ist die Geschichte eures besonderen Tages, die ihr immer wieder erleben könnt. Als professioneller Videograf in Hannover begleite ich euch...
+        </div>
+        <div class="sample-footer">
+          <div class="sample-title">SEO-стаття (DE)</div>
+          <div class="sample-actions">
+            <a href="https://docs.google.com/document/d/YOUR_DOC_ID/preview" target="_blank" class="sample-btn">Google Docs</a>
+            <a href="#" class="sample-btn primary-btn">PDF ↓</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top: 2.5rem;" class="reveal">
+      <a href="YOUR_LINK_HERE" target="_blank" rel="noopener" class="btn btn-outline" style="font-size:0.95rem; padding: 0.8rem 2rem;">
+        📂 Переглянути всі роботи ↗
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="container">
+    <div class="reveal" style="max-width: 480px; margin-bottom: 1rem;">
+      <div class="label">Як я працюю</div>
+      <h2 class="section-h2">Процес роботи</h2>
+      <p class="section-sub">Від задачі до результату — прозоро і без зайвих запитань</p>
+    </div>
+    <div class="process-track reveal">
+      <div class="process-step">
+        <div class="step-circle">1</div>
+        <div>
+          <div class="step-title">Отримую задачу</div>
+          <div class="step-desc">Бриф, ТЗ або просто повідомлення — приймаю в будь-якому форматі</div>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-circle">2</div>
+        <div>
+          <div class="step-title">Аналізую нішу</div>
+          <div class="step-desc">Вивчаю тему, та аналіз перед написанням</div>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-circle">3</div>
+        <div>
+          <div class="step-title">Пишу структуру</div>
+          <div class="step-desc">Погоджую план та заголовки — аби не переробляти потім</div>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-circle">4</div>
+        <div>
+          <div class="step-title">Створюю текст</div>
+          <div class="step-desc">Пишу якічно, без «води» і шаблонних фраз</div>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-circle">5</div>
+        <div>
+          <div class="step-title">Вношу правки</div>
+          <div class="step-desc">Коригую по зворотному зв'язку</div>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-circle">6</div>
+        <div>
+          <div class="step-title">Передаю результат</div>
+          <div class="step-desc">Google Docs, WordPress, Notion або інший зручний формат</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT (ОНОВЛЕНА СТРУКТУРА) -->
+<section id="contact">
+  <div class="container contact-inner">
+    <div class="reveal">
+      <div class="label">Контакти</div>
+      <h2 class="contact-h2">Давайте<br><em>домовимось</em></h2>
+      <p class="contact-sub">Якщо вам потрібен контент, що працює — напишіть. Відповідаю швидко.</p>
+      <div class="contact-links">
+        <a href="https://t.me/vlipol" target="_blank" class="contact-link">
+          <div class="contact-ico">✈️</div>
+          <div>
+            <div class="contact-info-label">Telegram</div>
+            <div class="contact-info-val">@vlipol</div>
+          </div>
+        </a>
+        <a href="mailto:vitaliypavliuk0@email.com" class="contact-link">
+          <div class="contact-ico">📧</div>
+          <div>
+            <div class="contact-info-label">Email</div>
+            <div class="contact-info-val">vitaliypavliuk0@email.com</div>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="contact-form reveal">
+      <div class="form-group">
+        <label>Ваше ім'я</label>
+        <input type="text" id="clientName" placeholder="Як до вас звертатися?">
+      </div>
+      <div class="form-group">
+        <label>Контакт для зв'язку</label>
+        <input type="text" id="clientContact" placeholder="Email або Telegram">
+      </div>
+      <div class="form-group">
+        <label>Задача</label>
+        <textarea id="clientTask" placeholder="Коротко про проєкт: що потрібно написати, яка тема, дедлайн..."></textarea>
+      </div>
+      <button class="btn btn-primary" onclick="handleFormSubmit(this)" style="width: 100%; justify-content: center; display: block; text-align: center;">Надіслати</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Portfolio · Контент-менеджер та копірайтер · Зроблено з ❤️</p>
+</footer>
+
+<script>
+  // Завантаження даних із локу або бекапу
+  async function loadPortfolioData() {
+    try {
+      let localData = localStorage.getItem('portfolioData');
+      let d = {};
+
+      if (localData) {
+        d = JSON.parse(localData);
+      } else {
+        console.log('localStorage порожній. Завантажуємо дефолтні дані з portfolio-backup.json...');
+        try {
+          const response = await fetch('./portfolio-backup.json');
+          if (response.ok) {
+            d = await response.json();
+            localStorage.setItem('portfolioData', JSON.stringify(d));
+          } else {
+            console.warn('Файл portfolio-backup.json не знайдено на сервері.');
+          }
+        } catch (fetchError) {
+          console.error('Не вдалося завантажити portfolio-backup.json:', fetchError);
+        }
+      }
+      
+      // Telegram
+      if (d.telegram && d.telegram.trim() !== "") {
+        const tgLink = document.querySelector('a[href*="t.me"]');
+        if (tgLink) {
+          tgLink.href = 'https://t.me/' + d.telegram.replace('@','');
+          tgLink.querySelector('.contact-info-val').textContent = d.telegram.startsWith('@') ? d.telegram : '@' + d.telegram;
+        }
+      }
+      
+      // Email
+      if (d.email && d.email.trim() !== "") {
+        const emailLink = document.querySelector('a[href^="mailto"]');
+        if (emailLink) {
+          emailLink.href = 'mailto:' + d.email;
+          emailLink.querySelector('.contact-info-val').textContent = d.email;
+        }
+      }
+ 
+      // About text
+      if (d.about && d.about.trim() !== "") {
+        const aboutEl = document.querySelector('.about-text');
+        if (aboutEl) aboutEl.innerHTML = d.about.split('\n\n').filter(Boolean).map(p => `<p>${p}</p>`).join('');
+      }
+ 
+      // Hero subtitle
+      if (d.heroSub && d.heroSub.trim() !== "") {
+        const sub = document.querySelector('.hero-sub');
+        if (sub) sub.textContent = d.heroSub;
+      }
+ 
+      // Cases
+      if (d.cases && d.cases.length) {
+        const grid = document.getElementById('casesGrid');
+        const addBtn = document.getElementById('addCaseBtn');
+        grid.querySelectorAll('[data-case]').forEach(c => c.remove());
+        d.cases.forEach(c => {
+          const card = document.createElement('div');
+          card.className = 'case-card'; card.setAttribute('data-case','');
+          card.innerHTML = `<span class="case-tag">${esc(c.tag)}</span><div class="case-title">${esc(c.title)}</div><div class="case-desc">${esc(c.desc)}</div>${c.meta?`<div class="case-meta">${esc(c.meta)}</div>`:''}`;
+          grid.insertBefore(card, addBtn);
+        });
+      }
+ 
+      // Skills
+      if (d.skills && d.skills.length) {
+        const sg = document.querySelector('.skills-grid');
+        if (sg) {
+          sg.innerHTML = d.skills.map(s => `
+            <div class="skill-card">
+              <div class="skill-top"><div class="skill-ico">${s.icon||'✦'}</div><div class="skill-name">${esc(s.name)}</div></div>
+              <div class="skill-desc">${esc(s.desc)}</div>
+            </div>`).join('');
+        }
+      }
+ 
+      // Samples
+      if (d.samples && d.samples.length) {
+        const sg2 = document.querySelector('.samples-grid');
+        if (sg2) {
+          sg2.innerHTML = d.samples.map(s => `
+            <div class="sample-card">
+              <div class="sample-preview">${s.preview}</div>
+              <div class="sample-footer">
+                <div class="sample-title">${esc(s.title)}</div>
+                <div class="sample-actions">
+                  ${s.docsUrl?`<a href="${s.docsUrl}" target="_blank" class="sample-btn">Google Docs</a>`:''}
+                  ${s.pdfUrl?`<a href="${s.pdfUrl}" target="_blank" class="sample-btn primary-btn">PDF ↓</a>`:''}
+                </div>
+              </div>
+            </div>`).join('');
+        }
+      }
+    } catch(e) { console.warn('Portfolio data load error', e); }
+  }
+ 
+  function esc(str) {
+    return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+ 
+  loadPortfolioData();
+ 
+  // Hamburger (Мобільне меню)
+  const ham = document.getElementById('hamburger');
+  const navLinks = document.getElementById('navLinks');
+  ham.addEventListener('click', () => navLinks.classList.toggle('open'));
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+ 
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+  reveals.forEach(el => obs.observe(el));
+ 
+  // Модалка для кейсів
+  const modal = document.getElementById('caseModal');
+  const addBtn = document.getElementById('addCaseBtn');
+  const closeBtn = document.getElementById('closeModal');
+  if (addBtn) addBtn.style.display = 'none'; 
+  if (closeBtn) closeBtn.addEventListener('click', () => modal && modal.classList.remove('open'));
+ 
+  // ІНТЕГРАЦІЯ З EMAILJS ДЛЯ ВІДПРАВКИ ФОРМИ
+  function handleFormSubmit(btn) {
+    const name = document.getElementById('clientName').value.trim();
+    const contact = document.getElementById('clientContact').value.trim();
+    const task = document.getElementById('clientTask').value.trim();
+
+    if (!name || !contact || !task) {
+      alert('Будь ласка, заповніть усі поля форми перед відправкою.');
+      return;
+    }
+
+    btn.textContent = 'Надсилання...';
+    btn.style.pointerEvents = 'none';
+
+    // Дані збігаються з полями в шаблоні {{змінна}} в кабінеті EmailJS
+    const templateParams = {
+      from_name: name,
+      client_contact: contact,
+      project_desc: task
+    };
+
+    emailjs.send('service_3c1r31o', 'template_tdwj4uo', templateParams)
+      .then(function(response) {
+         console.log('SUCCESS!', response.status, response.text);
+         btn.textContent = '✓ Надіслано!';
+         btn.style.background = 'var(--c-accent-mid)';
+         
+         // Очищення полів
+         document.getElementById('clientName').value = '';
+         document.getElementById('clientContact').value = '';
+         document.getElementById('clientTask').value = '';
+      }, function(error) {
+         console.error('FAILED...', error);
+         btn.textContent = '❌ Помилка відправки';
+         btn.style.background = '#d9534f';
+         btn.style.pointerEvents = '';
+      })
+      .finally(() => {
+         setTimeout(() => {
+           btn.textContent = 'Надіслати';
+           btn.style.background = '';
+           btn.style.pointerEvents = '';
+         }, 4000);
+      });
+  }
+</script>
+</body>
+</html>

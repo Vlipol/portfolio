@@ -1,0 +1,98 @@
+{
+  "telegram": "",
+  "email": "",
+  "heroSub": "",
+  "about": "",
+  "edu": "",
+  "exp": "",
+  "langs": "",
+  "tools": "",
+  "cases": [
+    {
+      "tag": "SEO",
+      "title": "Серія текстів для beauty-платформи",
+      "desc": "Написав серію SEO-оптимізованих текстів для освітньої платформи у сфері краси.",
+      "meta": "Краса та освіта · UA"
+    },
+    {
+      "tag": "SEO",
+      "title": "SEO-тексти для казино",
+      "desc": "Написав декілька текстів для казино",
+      "meta": "Igaming · UA"
+    },
+    {
+      "tag": "Переклад",
+      "title": "Переклад книг",
+      "desc": "Перекладав книги з української на англійську та навпаки",
+      "meta": "Переклад · EN + UA"
+    },
+    {
+      "tag": "ШІ",
+      "title": "Генерування розповіді",
+      "desc": "За допомогою ШІ згенерував розповідь із сюжетом. Редагував та покращував моменти",
+      "meta": "Твір · UA"
+    },
+    {
+      "tag": "WordPress",
+      "title": "Створював статті про відомих людей",
+      "desc": "Генерував текст, додавав картинки, постив у Wordpress разом із мета тегом та описом.",
+      "meta": "Статті · UA"
+    },
+    {
+      "tag": "E-commerce",
+      "title": "Створював карточки товарів для українського магазину",
+      "desc": "Створював карточки, наповнював всією інформацією, звіряв та постив",
+      "meta": "Музика · UA + EN"
+    },
+    {
+      "tag": "Документація",
+      "title": "Написання документації та гайдів",
+      "desc": "Писав різного виду та роду документацію для компаній. Особисті документи компанії, редагування, заповнення і тд. Також в списку документів були і гайди. І аналіз вимог до ПЗ.",
+      "meta": "IT EN + UA + CZ"
+    },
+    {
+      "tag": "ШІ",
+      "title": "Генерування різновидностей товару",
+      "desc": "Генерував різні типи товару. Колір, візерунок і тд.",
+      "meta": "E-commerce EN"
+    },
+    {
+      "tag": "Монтаж відео",
+      "title": "Монтаж відео на політичну тематику",
+      "desc": "Змонтував декілька відео для замовника. Не важкий монтаж (склейка, чистка, аудіо + ефекти)",
+      "meta": "Politics EN"
+    },
+    {
+      "tag": "E-commerce",
+      "title": "Написання відгуків на товари",
+      "desc": "Генерував та писав відгуки на велику кількість товарів через OpenCart",
+      "meta": "Music EN PL"
+    }
+  ],
+  "samples": [
+    {
+      "title": "Freshbet Review 2025",
+      "preview": "Looking for a trustworthy casino with good bonuses and games? This Freshbet review will<br>help you understand what this brand offers.",
+      "docsUrl": "",
+      "pdfUrl": "https://drive.google.com/file/d/1SmifABv0s8n3DqhCnVmfAFf2JwcvjEz5/view?usp=drive_link"
+    },
+    {
+      "title": "Переклад книги \"War by Bloody Action\"",
+      "preview": "The phone rang at 6 a.m. I woke up in absolute terror, afraid to answer. It was my sister. Two<br>months earlier, she had called the same way and said, “Dad is gone.” That blow tore<br>something inside me, and honestly, I hadn’t recovered. It was one of the most tragic<br>moments of my life. Now I feared I’d lost my mother too.",
+      "docsUrl": "",
+      "pdfUrl": "https://drive.google.com/file/d/1whtMlFYXOVN6f6ouMMij2DzJnkN2Gc7I/view?usp=drive_link"
+    },
+    {
+      "title": "SEO text KrakenLeads",
+      "preview": "Playing casino games in Canada is super exciting. It's like being a hockey fan in October. Lots of energy and many choices.. With so many online casinos out there how do you know if you're getting a good bonus or not?",
+      "docsUrl": "https://docs.google.com/document/d/1AWAH4uE-WZYNTr7WmBd13hJ39v3mDPqqCfSM6mxVkDw/edit?usp=sharing",
+      "pdfUrl": ""
+    },
+    {
+      "title": "Рерайт тексту про чоловічу брендову білизну",
+      "preview": "Навіть якщо ніхто не бачить, важлива кожна дрібниця. І це стосується чоловічої білизни. Наявність гарної білизни це не просто галочка — це основа гардеробу. Це впевненість у власному вигляді, комфорт і бездоганна посадка під будь-яким одягом — від класичного костюма до кежуал.",
+      "docsUrl": "https://docs.google.com/document/d/1W2LA6RNf2Win03Ho_Yb4wdFLgxoymvQHO9payW4rA-o/edit?usp=sharing",
+      "pdfUrl": ""
+    }
+  ]
+}
