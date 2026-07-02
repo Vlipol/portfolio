@@ -455,7 +455,7 @@
   }
   .modal-save:hover { opacity: 0.88; }
 
-  /* SAMPLES */
+  /* SAMPLES (ВИПРАВЛЕНИЙ СИНХРОНІЗОВАНИЙ БЛОК ДЛЯ ЗНІМОК ЕКРАНА) */
   #samples { background: var(--c-surface); }
   .samples-note {
     background: var(--c-accent-light);
@@ -687,7 +687,7 @@
   }
 </style>
 
-<!-- EmailJS SDK підключення та ініціалізація -->
+<!-- EmailJS SDK інсталяція -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script type="text/javascript">
   (function() {
@@ -1139,7 +1139,7 @@
   </div>
 </section>
 
-<!-- CONTACT (ОНОВЛЕНА СТРУКТУРА) -->
+<!-- CONTACT -->
 <section id="contact">
   <div class="container contact-inner">
     <div class="reveal">
@@ -1186,7 +1186,6 @@
 </footer>
 
 <script>
-  // Завантаження даних із локу або бекапу
   async function loadPortfolioData() {
     try {
       let localData = localStorage.getItem('portfolioData');
@@ -1290,7 +1289,7 @@
  
   loadPortfolioData();
  
-  // Hamburger (Мобільне меню)
+  // Hamburger
   const ham = document.getElementById('hamburger');
   const navLinks = document.getElementById('navLinks');
   ham.addEventListener('click', () => navLinks.classList.toggle('open'));
@@ -1310,7 +1309,7 @@
   if (addBtn) addBtn.style.display = 'none'; 
   if (closeBtn) closeBtn.addEventListener('click', () => modal && modal.classList.remove('open'));
  
-  // ІНТЕГРАЦІЯ З EMAILJS ДЛЯ ВІДПРАВКИ ФОРМИ
+  // ІНТЕГРАЦІЯ З EMAILJS
   function handleFormSubmit(btn) {
     const name = document.getElementById('clientName').value.trim();
     const contact = document.getElementById('clientContact').value.trim();
@@ -1324,20 +1323,18 @@
     btn.textContent = 'Надсилання...';
     btn.style.pointerEvents = 'none';
 
-    // Дані збігаються з полями в шаблоні {{змінна}} в кабінеті EmailJS
     const templateParams = {
       from_name: name,
       client_contact: contact,
       project_desc: task
     };
 
-    emailjs.send('service_3c1r31o', 'template_tdwj4uo', templateParams)
+    emailjs.send('service_3c1r31o', 'template_1al4j2w', templateParams)
       .then(function(response) {
          console.log('SUCCESS!', response.status, response.text);
          btn.textContent = '✓ Надіслано!';
          btn.style.background = 'var(--c-accent-mid)';
          
-         // Очищення полів
          document.getElementById('clientName').value = '';
          document.getElementById('clientContact').value = '';
          document.getElementById('clientTask').value = '';
